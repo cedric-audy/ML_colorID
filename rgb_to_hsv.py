@@ -6,15 +6,20 @@ from keras.models import Sequential
 from keras.layers.core import Dense, Activation
 from keras.optimizers import SGD
 
-X = np.array([
-[]
-              ])
-y = np.array([])
+# X = np.array([
+# [1,1,1],
+# [2,2,2],
+# [1,2,1]
+#               ])
+# y = np.array([[0,0,1],[0,1,0],[1,0,0]])
+
+# rgb_values
+
 
 model = Sequential()
-model.add(Dense(2, input_dim=2))
-model.add(Activation('sigmoid'))
-model.add(Dense(1))
+model.add(Dense(3, input_dim=3))
+model.add(Activation('softsign'))
+model.add(Dense(3))
 model.add(Activation('sigmoid'))
 
 sgd = SGD(lr=0.1)
