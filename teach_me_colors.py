@@ -1,9 +1,11 @@
 import tkinter as tk
 from csv import writer
+from datetime import datetime
 import random as rand
 
 class Application(tk.Frame):
     def __init__(self, master=None):
+        rand.seed(datetime.now())
         super().__init__(master)
         self.master = master
         self.pack()
