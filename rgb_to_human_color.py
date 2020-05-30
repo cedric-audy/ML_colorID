@@ -32,11 +32,11 @@ model.add(Activation('softsign'))
 model.add(Dense(9))
 model.add(Activation('softmax'))
 
-sgd = SGD(lr=0.07)
+sgd = SGD(lr=0.1, momentum=0.0001)
 model.compile(loss='mean_squared_error', optimizer=sgd)
 
 
-model.fit(X, y, batch_size=3, epochs=1000)
+model.fit(X, y, batch_size=10, epochs=2000)
 
 def get_key(result, val): 
     for key, value in result.items(): 

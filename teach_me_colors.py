@@ -66,7 +66,7 @@ class Application(tk.Frame):
         print()
 
         row_contents = [self.color, self.data[0], self.data[1], self.data[2]]
-        self.append_list_as_row('./color_verif.csv', row_contents)
+        self.append_list_as_row('./color_training.csv', row_contents)
         self.training_data.append((self.color,))
         self.rgb_sample.configure(bg=self.random_rgb_as_hex())
         
