@@ -33,10 +33,10 @@ model.add(Activation('softsign'))
 model.add(Dense(9))
 model.add(Activation('softmax'))
 
-ep = 1500
-learning_rate = 0.2
+ep = 50000
+learning_rate = 0.1
 decay_rate = learning_rate / ep
-momentum = 0.05
+momentum = 0.9
 sgd = SGD(lr=learning_rate, momentum=momentum, decay=decay_rate, nesterov=False)
 model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy'])
 
@@ -44,7 +44,7 @@ model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy'])
 # model.compile(loss='mean_squared_error', optimizer=sgd)
 
 
-model.fit(X, y, batch_size=24, epochs=ep)
+model.fit(X, y, batch_size=70, epochs=ep)
 
 def get_key(result, val): 
     for key, value in result.items(): 
@@ -84,15 +84,20 @@ if __name__ == '__main__':
         if topcolor[0][0] == data[i][0]:
             print(topcolor[0][0] + ' @ rgb(' + str(data[i][1]) +','+ str(data[i][2]) +','+ str(data[i][3]) +')    at ' + str(topcolor[0][1]))
             good_guess+=1
-            print('__________________________________________________________')
 
         # elif topcolor[1][0] == data[i][0]:
         #     print('ALMOST : ' + topcolor[1][0] + ' @ rgb(' + str(data[i][1]) +','+ str(data[i][2]) +','+ str(data[i][3]) +')    at ' + str(topcolor[1][1]))
         #     print('first was : ' + topcolor[0][0] + ' @ rgb(' + str(data[i][1]) +','+ str(data[i][2]) +','+ str(data[i][3]) +')    at ' + str(topcolor[0][1]))
         #     good_guess+=1
         #     print('__________________________________________________________')
+        else:
+            print('Wrong guess with rgb(' + str(data[i][1]) +','+ str(data[i][2]) +','+ str(data[i][3]) +')')
+            for c in topcolor:
+                print(str(c[0]) +' at '+str(c[1]))
+            print('good guess was : ' + str(data[i][0]))
 
 
+        print('__________________________________________________________')
         total+=1
         i+=1
     print('efficiency : ' + str(good_guess) + '/' + str(total))
