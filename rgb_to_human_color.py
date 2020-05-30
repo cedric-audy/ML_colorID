@@ -3,6 +3,7 @@ import csv
 
 # code is inspired from this tutorial : https://realpython.com/python-windows-machine-learning-setup/#introducing-anaconda-and-conda
 
+import keras
 from keras.models import Sequential
 from keras.layers.core import Dense, Activation
 from keras.optimizers import SGD
@@ -32,11 +33,18 @@ model.add(Activation('softsign'))
 model.add(Dense(9))
 model.add(Activation('softmax'))
 
-sgd = SGD(lr=0.1, momentum=0.0001)
-model.compile(loss='mean_squared_error', optimizer=sgd)
+ep = 5000
+learning_rate = 0.3
+decay_rate = learning_rate / ep
+momentum = 0.7
+sgd = SGD(lr=learning_rate, momentum=momentum, decay=decay_rate, nesterov=False)
+model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy'])
+
+# sgd = SGD(lr=0.2, momentum=0.07)
+# model.compile(loss='mean_squared_error', optimizer=sgd)
 
 
-model.fit(X, y, batch_size=10, epochs=2000)
+model.fit(X, y, batch_size=5, epochs=ep)
 
 def get_key(result, val): 
     for key, value in result.items(): 
