@@ -34,9 +34,9 @@ model.add(Dense(9))
 model.add(Activation('softmax'))
 
 ep = 1500
-learning_rate = 0.12
+learning_rate = 0.2
 decay_rate = learning_rate / ep
-momentum = 0.5
+momentum = 0.05
 sgd = SGD(lr=learning_rate, momentum=momentum, decay=decay_rate, nesterov=False)
 model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy'])
 
