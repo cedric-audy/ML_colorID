@@ -35,21 +35,21 @@ class Application(tk.Frame):
 
         colors = ["red","orange","yellow","green","blue","purple", "brown", "pink"]
         
-        self.rgb_sample = tk.Label(self, text='allo', width=50, height=10)
+        self.rgb_sample = tk.Label(self, width=50, height=20)
         self.rgb_sample.configure(bg=self.random_rgb_as_hex())
         self.rgb_sample.pack(side="top")
 
         buttonArr = []
 
-        buttonArr.append(tk.Button(self, text='red', command =lambda:self.curColor('red')))
-        buttonArr.append(tk.Button(self, text='yellow', command =lambda:self.curColor('yellow')))
-        buttonArr.append(tk.Button(self, text='orange', command =lambda:self.curColor('orange')))
-        buttonArr.append(tk.Button(self, text='green', command =lambda:self.curColor('green')))
-        buttonArr.append(tk.Button(self, text='blue', command =lambda:self.curColor('blue')))
-        buttonArr.append(tk.Button(self, text='purple', command =lambda:self.curColor('purple')))
-        buttonArr.append(tk.Button(self, text='brown', command =lambda:self.curColor('brown')))
-        buttonArr.append(tk.Button(self, text='pink', command =lambda:self.curColor('pink')))
-        buttonArr.append(tk.Button(self, text='gray', command =lambda:self.curColor('gray')))
+        buttonArr.append(tk.Button(self, text='red', font=("arial",32), command =lambda:self.curColor('red')))
+        buttonArr.append(tk.Button(self, text='yellow',font=("arial",32), command =lambda:self.curColor('yellow')))
+        buttonArr.append(tk.Button(self, text='orange', font=("arial",32),command =lambda:self.curColor('orange')))
+        buttonArr.append(tk.Button(self, text='green', font=("arial",32),command =lambda:self.curColor('green')))
+        buttonArr.append(tk.Button(self, text='blue', font=("arial",32),command =lambda:self.curColor('blue')))
+        buttonArr.append(tk.Button(self, text='purple', font=("arial",32),command =lambda:self.curColor('purple')))
+        buttonArr.append(tk.Button(self, text='brown', font=("arial",32),command =lambda:self.curColor('brown')))
+        buttonArr.append(tk.Button(self, text='pink', font=("arial",32),command =lambda:self.curColor('pink')))
+        buttonArr.append(tk.Button(self, text='gray', font=("arial",32),command =lambda:self.curColor('gray')))
         
         for b in buttonArr:
             b.pack(side="right")
@@ -66,7 +66,7 @@ class Application(tk.Frame):
         print()
 
         row_contents = [self.color, self.data[0], self.data[1], self.data[2]]
-        self.append_list_as_row('./color_training.csv', row_contents)
+        self.append_list_as_row('./color_verif.csv', row_contents)
         self.training_data.append((self.color,))
         self.rgb_sample.configure(bg=self.random_rgb_as_hex())
         
