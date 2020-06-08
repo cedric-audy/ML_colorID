@@ -35,7 +35,7 @@ model.add(Dense(9))
 model.add(Activation('softmax'))
 
 ep = 10000
-learning_rate = 0.1
+learning_rate = 0.5
 decay_rate = learning_rate / ep
 momentum = 0.7
 sgd = SGD(lr=learning_rate, momentum=momentum, decay=decay_rate, nesterov=False)
