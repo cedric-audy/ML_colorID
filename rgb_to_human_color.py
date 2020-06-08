@@ -32,14 +32,14 @@ model.add(Dense(3, input_dim=3))
 
 print(model.layers[0].get_weights())
 0.2989, 0.5870, 0.1140
-model.layers[0].set_weights([np.array([[0.2989,0.2989,0.2989],[0.5870,0.5870,0.5870],[0.1140,0.1140,0.1140]]), np.array([0,0,0])])
+model.layers[0].set_weights([np.array([[0.2989,0.2989,0.2989],[0.5870,0.5870,0.5870],[0.1140,0.1140,0.1140]]), np.array([0.5,0.5,0])])
 
 
 model.add(Activation('softsign'))
 model.add(Dense(9))
 model.add(Activation('softmax'))
 
-ep = 10000
+ep = 5000
 learning_rate = 0.09
 decay_rate = learning_rate / ep
 momentum = 0.7
@@ -50,7 +50,7 @@ model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy'])
 # model.compile(loss='mean_squared_error', optimizer=sgd)
 
 
-model.fit(X, y, batch_size=64, epochs=ep)
+model.fit(X, y, batch_size=128, epochs=ep)
 
 def get_key(result, val): 
     for key, value in result.items(): 
@@ -107,3 +107,4 @@ if __name__ == '__main__':
         total+=1
         i+=1
     print('efficiency : ' + str(good_guess) + '/' + str(total))
+    print(model.get_weights())
