@@ -28,14 +28,9 @@ for c,r,g,b in data:
 y = np.array(rows)
 
 model = Sequential()
-# model.add(Dense(3, input_dim=3))
-
-# print(model.layers[0].get_weights())
-# 0.2989, 0.5870, 0.1140
-# model.layers[0].set_weights([np.array([[0.2989,0.2989,0.2989],[0.5870,0.5870,0.5870],[0.1140,0.1140,0.1140]]), np.array([0.5,0.5,0])])
-
-
-# model.add(Activation('softsign'))
+model.add(Dense(3, input_dim=3))
+model.layers[0].set_weights([np.array([[0.2989,0.2989,0.2989],[0.5870,0.5870,0.5870],[0.1140,0.1140,0.1140]]), np.array([0.5,0.5,0])])
+model.add(Activation('softsign'))
 model.add(Dense(9))
 model.add(Activation('softmax'))
 
@@ -44,18 +39,9 @@ learning_rate = 0.1
 decay_rate = learning_rate / ep
 momentum = 0.7
 sgd = SGD(lr=learning_rate, momentum=momentum, decay=decay_rate, nesterov=False)
+
 model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy'])
-
-# sgd = SGD(lr=0.2, momentum=0.07)
-# model.compile(loss='mean_squared_error', optimizer=sgd)
-
-
-model.fit(X, y, batch_size=128, epochs=ep)
-
-def get_key(result, val): 
-    for key, value in result.items(): 
-         if val == value: 
-             return key 
+model.fit(X, y, batch_size=256, epochs=ep)
 
 def verify():
     with open('./data/color_verif.csv', newline='') as f:
@@ -70,7 +56,7 @@ if __name__ == '__main__':
     test_rgb = np.array(test_rgb)
     results = model.predict(test_rgb)
 
-    good_guess = 0
+    good_guesses = 0
     total = 0
     i = 0
     for r in results:
@@ -83,17 +69,14 @@ if __name__ == '__main__':
         topcolor = topcolor[0:3]
         if topcolor[0][0] == data[i][0]:
             print(topcolor[0][0] + ' @ rgb(' + str(data[i][1]) +','+ str(data[i][2]) +','+ str(data[i][3]) +')    at ' + str(topcolor[0][1]))
-            good_guess+=1
+            good_guesses+=1
 
         else:
             print('Wrong guess with rgb(' + str(data[i][1]) +','+ str(data[i][2]) +','+ str(data[i][3]) +')')
             for c in topcolor:
                 print(str(c[0]) +' at '+str(c[1]))
             print('good guess was : ' + str(data[i][0]))
-
-
         print('__________________________________________________________')
         total+=1
         i+=1
-    print('efficiency : ' + str(good_guess) + '/' + str(total))
-    print(model.get_weights())
+    print('efficiency : ' + str(good_guesses) + '/' + str(total))
