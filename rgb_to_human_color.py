@@ -33,10 +33,10 @@ model.add(Activation('softsign'))
 model.add(Dense(9))
 model.add(Activation('softmax'))
 
-ep = 50000
-learning_rate = 0.1
+ep = 10000
+learning_rate = 0.09
 decay_rate = learning_rate / ep
-momentum = 0.9
+momentum = 0.7
 sgd = SGD(lr=learning_rate, momentum=momentum, decay=decay_rate, nesterov=False)
 model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy'])
 
@@ -44,7 +44,7 @@ model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy'])
 # model.compile(loss='mean_squared_error', optimizer=sgd)
 
 
-model.fit(X, y, batch_size=70, epochs=ep)
+model.fit(X, y, batch_size=64, epochs=ep)
 
 def get_key(result, val): 
     for key, value in result.items(): 
