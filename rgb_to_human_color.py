@@ -11,7 +11,7 @@ from keras.optimizers import SGD
 colorDict = {'red':0, 'orange':1, 'yellow':2, 'green':3, 'blue':4,'purple':5,'brown':6,'pink':7, 'gray':8}
 colorIndexDict = {b:a for a,b in colorDict.items()}
 
-with open('./color_training.csv', newline='') as f:
+with open('./data/color_training.csv', newline='') as f:
     reader = csv.reader(f)
     data = list(reader)
 for d in data:
@@ -52,7 +52,7 @@ def get_key(result, val):
              return key 
 
 def verify():
-    with open('./color_verif.csv', newline='') as f:
+    with open('./data/color_verif.csv', newline='') as f:
         reader = csv.reader(f)
         data = list(reader)
     return data
