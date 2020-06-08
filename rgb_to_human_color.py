@@ -31,7 +31,8 @@ model = Sequential()
 model.add(Dense(3, input_dim=3))
 
 print(model.layers[0].get_weights())
-model.layers[0].set_weights([np.array([[0.2,0.2,0.2],[0.6,0.6,0.6],[0.1,0.1,0.1]]), np.array([0,1,0])])
+0.2989, 0.5870, 0.1140
+model.layers[0].set_weights([np.array([[0.2989,0.2989,0.2989],[0.5870,0.5870,0.5870],[0.1140,0.1140,0.1140]]), np.array([0,0,0])])
 
 
 model.add(Activation('softsign'))
