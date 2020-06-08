@@ -28,19 +28,19 @@ for c,r,g,b in data:
 y = np.array(rows)
 
 model = Sequential()
-model.add(Dense(3, input_dim=3))
+# model.add(Dense(3, input_dim=3))
 
-print(model.layers[0].get_weights())
-0.2989, 0.5870, 0.1140
-model.layers[0].set_weights([np.array([[0.2989,0.2989,0.2989],[0.5870,0.5870,0.5870],[0.1140,0.1140,0.1140]]), np.array([0.5,0.5,0])])
+# print(model.layers[0].get_weights())
+# 0.2989, 0.5870, 0.1140
+# model.layers[0].set_weights([np.array([[0.2989,0.2989,0.2989],[0.5870,0.5870,0.5870],[0.1140,0.1140,0.1140]]), np.array([0.5,0.5,0])])
 
 
-model.add(Activation('softsign'))
+# model.add(Activation('softsign'))
 model.add(Dense(9))
 model.add(Activation('softmax'))
 
-ep = 5000
-learning_rate = 0.09
+ep = 10000
+learning_rate = 0.1
 decay_rate = learning_rate / ep
 momentum = 0.7
 sgd = SGD(lr=learning_rate, momentum=momentum, decay=decay_rate, nesterov=False)
@@ -81,21 +81,10 @@ if __name__ == '__main__':
             j+=1
         topcolor = sorted(doubleR, key = lambda c:c[1])[::-1]
         topcolor = topcolor[0:3]
-        # print('top candidate colors (desc) for: ')
-        # for c in topcolor:
-        #     print(str(c[0]))
-        # print()
-        # print('most likely : ' + topcolor[0][0])
-        # print('selon ced : ' + data[i][0])
         if topcolor[0][0] == data[i][0]:
             print(topcolor[0][0] + ' @ rgb(' + str(data[i][1]) +','+ str(data[i][2]) +','+ str(data[i][3]) +')    at ' + str(topcolor[0][1]))
             good_guess+=1
 
-        # elif topcolor[1][0] == data[i][0]:
-        #     print('ALMOST : ' + topcolor[1][0] + ' @ rgb(' + str(data[i][1]) +','+ str(data[i][2]) +','+ str(data[i][3]) +')    at ' + str(topcolor[1][1]))
-        #     print('first was : ' + topcolor[0][0] + ' @ rgb(' + str(data[i][1]) +','+ str(data[i][2]) +','+ str(data[i][3]) +')    at ' + str(topcolor[0][1]))
-        #     good_guess+=1
-        #     print('__________________________________________________________')
         else:
             print('Wrong guess with rgb(' + str(data[i][1]) +','+ str(data[i][2]) +','+ str(data[i][3]) +')')
             for c in topcolor:
