@@ -26,9 +26,8 @@ y = np.array(rows)
 
 model = Sequential()
 model.add(Dense(3, input_dim=3))
-model.layers[0].set_weights([np.array([[0.2989,0.2989,0.2989],[0.5870,0.5870,0.5870],[0.1140,0.1140,0.1140]]), np.array([0.4,0.5,0.1])])
 model.add(Activation('softsign'))
-model.add(keras.layers.Dense(5, activation='softsign'))
+model.add(keras.layers.Dense(7, activation='softsign'))
 model.add(Dense(9))
 model.add(Activation('softmax'))
 
