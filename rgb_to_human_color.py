@@ -29,13 +29,14 @@ y = np.array(rows)
 
 model = Sequential()
 model.add(Dense(3, input_dim=3))
-model.layers[0].set_weights([np.array([[0.2989,0.2989,0.2989],[0.5870,0.5870,0.5870],[0.1140,0.1140,0.1140]]), np.array([0.5,0.5,0])])
+# model.layers[0].set_weights([np.array([[0.2989,0.2989,0.2989],[0.5870,0.5870,0.5870],[0.1140,0.1140,0.1140]]), np.array([0.4,0.5,0.1])])
 model.add(Activation('softsign'))
+model.add(keras.layers.Dense(5, activation='sigmoid'))
 model.add(Dense(9))
 model.add(Activation('softmax'))
 
-ep = 10000
-learning_rate = 0.5
+ep = 20000
+learning_rate = 0.7
 decay_rate = learning_rate / ep
 momentum = 0.7
 sgd = SGD(lr=learning_rate, momentum=momentum, decay=decay_rate, nesterov=False)
