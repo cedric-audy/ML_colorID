@@ -1,12 +1,10 @@
 import numpy as np
 import csv
-
-# code is inspired from this tutorial : https://realpython.com/python-windows-machine-learning-setup/#introducing-anaconda-and-conda
-
 import keras
 from keras.models import Sequential
 from keras.layers.core import Dense, Activation
 from keras.optimizers import SGD
+# code is inspired from this tutorial : https://realpython.com/python-windows-machine-learning-setup/#introducing-anaconda-and-conda
 
 colorDict = {'red':0, 'orange':1, 'yellow':2, 'green':3, 'blue':4,'purple':5,'brown':6,'pink':7, 'gray':8}
 colorIndexDict = {b:a for a,b in colorDict.items()}
@@ -29,13 +27,12 @@ y = np.array(rows)
 
 model = Sequential()
 model.add(Dense(3, input_dim=3))
-# model.layers[0].set_weights([np.array([[0.2989,0.2989,0.2989],[0.5870,0.5870,0.5870],[0.1140,0.1140,0.1140]]), np.array([0.4,0.5,0.1])])
 model.add(Activation('softsign'))
-model.add(keras.layers.Dense(5, activation='sigmoid'))
+model.add(keras.layers.Dense(5, activation='softsign'))
 model.add(Dense(9))
 model.add(Activation('softmax'))
 
-ep = 20000
+ep = 10000
 learning_rate = 0.7
 decay_rate = learning_rate / ep
 momentum = 0.7
