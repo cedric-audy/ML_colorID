@@ -32,12 +32,12 @@ model.add(Dense(9))
 model.add(Activation('softmax'))
 
 ep = 10000
-learning_rate = 0.7
+learning_rate = 0.9
 decay_rate = learning_rate / ep
 momentum = 0.7
 sgd = SGD(lr=learning_rate, momentum=momentum, decay=decay_rate, nesterov=False)
 
-model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy'])
+model.compile(loss='mean_squared_error', optimizer=sgd, metrics=['accuracy'])
 model.fit(X, y, batch_size=256, epochs=ep)
 
 def verify():
