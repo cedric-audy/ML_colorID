@@ -25,9 +25,9 @@ for c,r,g,b in data:
 y = np.array(rows)
 
 model = Sequential()
-model.add(Dense(3, input_dim=3))
-model.add(Activation('softsign'))
-model.add(keras.layers.Dense(7, activation='softsign'))
+model.add(Dense(9, input_dim=3))
+model.add(Activation('sigmoid'))
+model.add(keras.layers.Dense(9, activation='sigmoid'))
 model.add(Dense(9))
 model.add(Activation('softmax'))
 
@@ -37,7 +37,7 @@ decay_rate = learning_rate / ep
 momentum = 0.7
 sgd = SGD(lr=learning_rate, momentum=momentum, decay=decay_rate, nesterov=False)
 
-model.compile(loss='poisson', optimizer=sgd, metrics=['accuracy'])
+model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy'])
 model.fit(X, y, batch_size=256, epochs=ep)
 
 def verify():
