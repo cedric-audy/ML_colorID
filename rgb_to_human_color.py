@@ -31,14 +31,14 @@ model.add(keras.layers.Dense(9, activation='sigmoid'))
 model.add(Dense(9))
 model.add(Activation('softmax'))
 
-ep = 10000
-learning_rate = 0.9
+ep = 5000
+learning_rate = 0.7
 decay_rate = learning_rate / ep
 momentum = 0.7
 sgd = SGD(lr=learning_rate, momentum=momentum, decay=decay_rate, nesterov=False)
 
 model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy'])
-model.fit(X, y, batch_size=256, epochs=ep)
+model.fit(X, y, batch_size=128, epochs=ep)
 
 def verify():
     with open('./data/color_verif.csv', newline='') as f:
