@@ -1,5 +1,6 @@
 import argparse
 import sys
+import tkinter as tk
 from csv import writer
 import teach_me_colors as trainer
 import rgb_to_human_color as ml_color
@@ -68,6 +69,11 @@ if __name__ == '__main__':
             lr = random.uniform(0.5,1)
             m = random.random() if args.m == 0 else args.m
             run(args.e,lr,m)
+    elif args.tr or args.vr:
+        path = TRAINING_DATA if args.tr else VERIF_DATA
+        root = tk.Tk()
+        app = trainer.Application(path, master=root)
+        app.mainloop()
     elif args.p:
         import plot_test as pl
         data = pl.plotAccuracy(ACCURACY_DATA)

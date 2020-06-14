@@ -17,7 +17,7 @@ class Model:
         self.colorIndexDict = {b:a for a,b in COLORDICT.items()}
         self.model = None
         self.epochs = epochs
-        self.sgd = SGD(lr=learning_rate, momentum=momentum, decay=learning_rate/self.epochs , nesterov=True)
+        self.sgd = SGD(lr=learning_rate, momentum=momentum, decay=learning_rate/self.epochs , nesterov=False)
     # ===============================================================================================
     def train(self):
         data = self.readData(self.training_path)
@@ -40,10 +40,7 @@ class Model:
         self.model = Sequential()
         self.model.add(Dense(9, input_dim=3))
         self.model.add(Activation('sigmoid'))
-        self.model.add(keras.layers.Dropout(0.05))
         self.model.add(keras.layers.Dense(9, activation='sigmoid'))
-        self.model.add(keras.layers.Dropout(0.05))
-        # Add a dropout layer for previous hidden layer
         self.model.add(keras.layers.Dense(9, activation='softmax'))
     # ===============================================================================================
     def predictResults(self, arr):

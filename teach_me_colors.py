@@ -4,7 +4,8 @@ from datetime import datetime
 import random as rand
 
 class Application(tk.Frame):
-    def __init__(self, master=None):
+    def __init__(self, path, master=None):
+        self.path = path
         rand.seed(datetime.now())
         super().__init__(master)
         self.master = master
@@ -14,9 +15,7 @@ class Application(tk.Frame):
         self.create_widgets()
         self.rgb_sample
         self.training_data = []
-        root = tk.Tk()
-        app = Application(master=root)
-        app.mainloop()
+
 
     def random_rgb_as_hex(self):
         self.data = (
@@ -58,7 +57,6 @@ class Application(tk.Frame):
             b.pack(side="right")
 
     def append_list_as_row(self, file_name, list_of_elem):
-    # https://thispointer.com/python-how-to-append-a-new-row-to-an-existing-csv-file/
         with open(file_name, 'a+', newline='') as write_obj:
             csv_writer = writer(write_obj)
             csv_writer.writerow(list_of_elem)
@@ -72,3 +70,8 @@ class Application(tk.Frame):
         self.append_list_as_row(self.path, row_contents)
         self.training_data.append((self.color,))
         self.rgb_sample.configure(bg=self.random_rgb_as_hex())
+
+if __name__ == '__main__':
+    root = tk.Tk()
+    app = Application(master=root)
+    app.mainloop()

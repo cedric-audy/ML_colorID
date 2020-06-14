@@ -16,7 +16,6 @@ class plotAccuracy:
             x.append(float(lr))
             y.append(float(m))
             z.append(float(acc))
-            print(acc)
             
 
         ax.scatter(x, y, z, c = 'r', marker='o')
