@@ -46,6 +46,7 @@ def parse_args():
 	mutualExclusion = parser.add_mutually_exclusive_group()
 	mutualExclusion.add_argument('-tr', action='store_true')
 	mutualExclusion.add_argument('-vr', action='store_true')
+	mutualExclusion.add_argument('-p', action='store_true')
 	args = parser.parse_args()
 
 	return args
@@ -64,9 +65,13 @@ if __name__ == '__main__':
     args = parse_args()
     if args.lr == 0:
         while True:
-            lr = random.random()
+            lr = random.uniform(0.5,1)
             m = random.random() if args.m == 0 else args.m
             run(args.e,lr,m)
+    elif args.p:
+        import plot_test as pl
+        data = pl.plotAccuracy(ACCURACY_DATA)
+
     else:
         run(args.e,args.lr,args.m)
     
