@@ -2,43 +2,55 @@ import numpy as np
 import csv
 import keras
 from keras.models import Sequential
+from keras.layers import Dropout
 from keras.layers.core import Dense, Activation
 from keras.optimizers import SGD
 
-colorDict = {'red':0, 'orange':1, 'yellow':2, 'green':3, 'blue':4,'purple':5,'brown':6,'pink':7, 'gray':8}
-colorIndexDict = {b:a for a,b in colorDict.items()}
 
-with open('./data/color_training.csv', newline='') as f:
-    reader = csv.reader(f)
-    data = list(reader)
-for d in data:
-    d[0] = colorDict[d[0]]
+TRAINING_DATA = './data/color_training.csv'
 
-rgb_vals = [[r,g,b] for c,r,g,b in data]
-X = np.array(rgb_vals)
+# ===============================================================================================
+class Model:
+    # ===============================================================================================
+    def __init__(self,epochs =5000, learning_rate=0.99,momentum = 0.8):
+        self.colorDict = {'red':0, 'orange':1, 'yellow':2, 'green':3, 'blue':4,'purple':5,'brown':6,'pink':7, 'gray':8}
+        self.colorIndexDict = {b:a for a,b in self.colorDict.items()}
+        self.model = None
+        self.epochs = epochs
+        self.sgd = SGD(lr=learning_rate, momentum=momentum, decay=learning_rate/epochs , nesterov=True)
 
-rows = []
-for c,r,g,b in data:
-    r = [0,0,0,0,0,0,0,0,0]
-    r[c]=1
-    rows.append(r)
-y = np.array(rows)
+    def train(self):
+        with open(TRAINING_DATA, newline='') as f:
+            reader = csv.reader(f)
+            data = list(reader)
+        
+        for d in data:
+            d[0] = self.colorDict[d[0]]
+        rgb_vals = [[r,g,b] for c,r,g,b in data]
+        X = np.array(rgb_vals) #training rgb vals
+        
+        #answers(human color)
+        rows = []
+        for c,r,g,b in data:
+            r = [0,0,0,0,0,0,0,0,0]
+            r[c]=1
+            rows.append(r)
+        y = np.array(rows)
+        self.model.compile(loss='mean_squared_error', optimizer=self.sgd, metrics=['accuracy'])
+        self.model.fit(X, y, batch_size=256, epochs=self.epochs)
 
-model = Sequential()
-model.add(Dense(9, input_dim=3))
-model.add(Activation('sigmoid'))
-model.add(keras.layers.Dense(9, activation='sigmoid'))
-model.add(keras.layers.Dense(9, activation='sigmoid'))
-model.add(keras.layers.Dense(9, activation='softmax'))
-
-ep = 10000
-learning_rate = 0.4
-decay_rate = learning_rate / ep
-momentum = 0.7
-sgd = SGD(lr=learning_rate, momentum=momentum, decay=decay_rate, nesterov=True)
-
-model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy'])
-model.fit(X, y, batch_size=256, epochs=ep)
+    def buildModel(self):
+        self.model = Sequential()
+        self.model.add(Dense(9, input_dim=3))
+        self.model.add(Activation('sigmoid'))
+        self.model.add(keras.layers.Dropout(0.05))
+        self.model.add(keras.layers.Dense(9, activation='sigmoid'))
+        self.model.add(keras.layers.Dropout(0.05))
+        # Add a dropout layer for previous hidden layer
+        self.model.add(keras.layers.Dense(9, activation='softmax'))
+    
+    def predictResults(self, arr):
+        return self.model.predict(arr)
 
 def verify():
     with open('./data/color_verif.csv', newline='') as f:
@@ -51,7 +63,10 @@ if __name__ == '__main__':
     data = verify()
     test_rgb = [[r,g,b] for c,r,g,b in data]
     test_rgb = np.array(test_rgb)
-    results = model.predict(test_rgb)
+    m = Model()
+    m.buildModel()
+    m.train()
+    results = m.predictResults(test_rgb)
 
     good_guesses = 0
     total = 0
@@ -60,7 +75,7 @@ if __name__ == '__main__':
         doubleR = []
         j = 0
         for c in r:
-            doubleR.append((colorIndexDict[j],c))
+            doubleR.append((m.colorIndexDict[j],c))
             j+=1
         topcolor = sorted(doubleR, key = lambda c:c[1])[::-1]
         topcolor = topcolor[0:3]
