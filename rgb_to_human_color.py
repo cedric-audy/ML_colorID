@@ -29,9 +29,7 @@ model.add(Dense(9, input_dim=3))
 model.add(Activation('sigmoid'))
 model.add(keras.layers.Dense(9, activation='sigmoid'))
 model.add(keras.layers.Dense(9, activation='sigmoid'))
-model.add(keras.layers.Dense(9, activation='sigmoid'))
-model.add(Dense(9))
-model.add(Activation('softmax'))
+model.add(keras.layers.Dense(9, activation='softmax'))
 
 ep = 5000
 learning_rate = 0.7
