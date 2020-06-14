@@ -7,22 +7,20 @@ from keras.layers.core import Dense, Activation
 from keras.optimizers import SGD
 
 # ===============================================================================================
-TRAINING_DATA = './data/color_training.csv'
-# ===============================================================================================
-VERIF_DATA = './data/color_verif.csv'
-# ===============================================================================================
 COLORDICT = {'red':0, 'orange':1, 'yellow':2, 'green':3, 'blue':4,'purple':5,'brown':6,'pink':7, 'gray':8}
 # ===============================================================================================
 class Model:
     # ===============================================================================================
-    def __init__(self,epochs =5000, learning_rate=0.99,momentum = 0.8):
+    def __init__(self, training_path, verif_path, epochs =5000, learning_rate=0.99,momentum = 0.8):
+        self.training_path = training_path
+        self.verif_path = verif_path
         self.colorIndexDict = {b:a for a,b in COLORDICT.items()}
         self.model = None
         self.epochs = epochs
         self.sgd = SGD(lr=learning_rate, momentum=momentum, decay=learning_rate/self.epochs , nesterov=True)
     # ===============================================================================================
     def train(self):
-        data = self.readData(TRAINING_DATA)
+        data = self.readData(self.training_path)
         for d in data:
             d[0] = COLORDICT[d[0]]
         rgb_vals = [[r,g,b] for c,r,g,b in data]
@@ -58,7 +56,7 @@ class Model:
         return data
     # ===============================================================================================
     def verify(self):
-        data = self.readData(VERIF_DATA)
+        data = self.readData(verif_path)
         test_rgb = np.array([[r,g,b] for c,r,g,b in data])
 
         test_rgb = self.predictResults(test_rgb)
@@ -94,4 +92,4 @@ if __name__ == '__main__':
     m = Model()
     m.buildModel()
     m.train()
-    m.verify()
+    r = m.verify()
