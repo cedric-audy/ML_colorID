@@ -14,6 +14,9 @@ class Application(tk.Frame):
         self.create_widgets()
         self.rgb_sample
         self.training_data = []
+        root = tk.Tk()
+        app = Application(master=root)
+        app.mainloop()
 
     def random_rgb_as_hex(self):
         self.data = (
@@ -66,13 +69,6 @@ class Application(tk.Frame):
         print()
 
         row_contents = [self.color, self.data[0], self.data[1], self.data[2]]
-        self.append_list_as_row('./data/color_training.csv', row_contents)
+        self.append_list_as_row(self.path, row_contents)
         self.training_data.append((self.color,))
         self.rgb_sample.configure(bg=self.random_rgb_as_hex())
-        
-
-
-
-root = tk.Tk()
-app = Application(master=root)
-app.mainloop()
