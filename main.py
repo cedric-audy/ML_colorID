@@ -65,7 +65,7 @@ if __name__ == '__main__':
     if args.lr == 0:
         while True:
             lr = random.random()
-            m = random.random()
+            m = random.random() if args.m == 0 else args.m
             run(args.e,lr,m)
     else:
         run(args.e,args.lr,args.m)
