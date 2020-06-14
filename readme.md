@@ -12,5 +12,5 @@ For training, I wrote a small tkinter program that displays a random rgb value, 
 
 Accuracy is currently maxing out at ~80%. A plausible explanation is the inefficiency of the small supervised training program I wrote, combined with my own inability to label edge cases in a consistent and satisfying way, or then again the lack of choices. The program notably fails at identifying orange or brown at all, and distinguishing between red,pink, and purple.
 
-
 ![results](/img/results.jpg)
+![plot](/img/3dplot.jpg)
