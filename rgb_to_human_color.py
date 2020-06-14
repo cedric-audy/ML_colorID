@@ -56,7 +56,7 @@ class Model:
         return data
     # ===============================================================================================
     def verify(self):
-        data = self.readData(verif_path)
+        data = self.readData(self.verif_path)
         test_rgb = np.array([[r,g,b] for c,r,g,b in data])
 
         test_rgb = self.predictResults(test_rgb)
