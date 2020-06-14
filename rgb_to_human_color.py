@@ -28,6 +28,8 @@ model = Sequential()
 model.add(Dense(9, input_dim=3))
 model.add(Activation('sigmoid'))
 model.add(keras.layers.Dense(9, activation='sigmoid'))
+model.add(keras.layers.Dense(9, activation='sigmoid'))
+model.add(keras.layers.Dense(9, activation='sigmoid'))
 model.add(Dense(9))
 model.add(Activation('softmax'))
 
@@ -38,7 +40,7 @@ momentum = 0.7
 sgd = SGD(lr=learning_rate, momentum=momentum, decay=decay_rate, nesterov=False)
 
 model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy'])
-model.fit(X, y, batch_size=128, epochs=ep)
+model.fit(X, y, batch_size=256, epochs=ep)
 
 def verify():
     with open('./data/color_verif.csv', newline='') as f:
