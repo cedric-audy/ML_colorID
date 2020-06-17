@@ -62,7 +62,7 @@ def run(e, lr, mom):
     r = m.verify()
     print(f'{"{:.2}".format(r)},{lr},{mom}')
     append_list_as_row(ACCURACY_DATA,[r,lr,mom])
-    print(m.model.get_weights())
+    # print(m.model.get_weights())
 #===============================================================================================
 if __name__ == '__main__':
     import random

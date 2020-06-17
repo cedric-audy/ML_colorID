@@ -1,20 +1,20 @@
 import numpy as np
 import csv
+import time
+
 import tensorflow
 from tensorflow import keras
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dropout
 from tensorflow.keras.layers import Dense, Activation
 from tensorflow.keras.optimizers import SGD
-
-#test tensorboard
 from tensorflow.keras.callbacks import TensorBoard
 
 
 # ===============================================================================================
 COLORDICT = {'red':0, 'orange':1, 'yellow':2, 'green':3, 'blue':4,'purple':5,'brown':6,'pink':7, 'gray':8}
 # ===============================================================================================
-NAME = "rgb_to_human_color_cnn_3x9_dense"
+NAME = f"rgb_to_human_color_cnn_3x9_dense{int(time.time())}"
 # ===============================================================================================
 class Model:
     # ===============================================================================================
@@ -33,7 +33,7 @@ class Model:
         self.model.add(Activation('sigmoid'))
         self.model.add(keras.layers.Dense(9, activation='sigmoid'))
         self.model.add(keras.layers.Dense(9, activation='softmax'))
-        self.tensorboard = TensorBoard(f'logs/.')
+        self.tensorboard = TensorBoard(f'.\logs\{NAME}')
     # ===============================================================================================
     def train(self):
         data = self.readData(self.training_path)
@@ -63,7 +63,7 @@ class Model:
     # ===============================================================================================
     def verify(self):
         data = self.readData(self.verif_path)
-        test_rgb = np.array([[r,g,b] for c,r,g,b in data])
+        test_rgb = np.array([[float(r),float(g),float(b)] for c,r,g,b in data])
 
         test_rgb = self.predictResults(test_rgb)
         good_guesses = 0
