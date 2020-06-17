@@ -18,6 +18,9 @@ usage = '''Usage:
 	-lr       learning rate 0<lr<1
 	-m        momentum 0<m<1
 	-e        epochs
+
+    -vr input verification data
+    -tr input training data
     '''
 #===============================================================================================
 def print_usage_and_exit(exitMsg : str = ""):
@@ -59,6 +62,7 @@ def run(e, lr, mom):
     r = m.verify()
     print(f'{"{:.2}".format(r)},{lr},{mom}')
     append_list_as_row(ACCURACY_DATA,[r,lr,mom])
+    print(m.model.get_weights())
 #===============================================================================================
 if __name__ == '__main__':
     import random
@@ -67,7 +71,7 @@ if __name__ == '__main__':
     if args.lr == 0:
         while True:
             lr = random.uniform(0.5,1)
-            m = random.random() if args.m == 0 else args.m
+            m = random.uniform(0.5,1) if args.m == 0 else args.m
             run(args.e,lr,m)
     elif args.tr or args.vr:
         path = TRAINING_DATA if args.tr else VERIF_DATA

@@ -1,13 +1,20 @@
 import numpy as np
 import csv
-import keras
-from keras.models import Sequential
-from keras.layers import Dropout
-from keras.layers.core import Dense, Activation
-from keras.optimizers import SGD
+import tensorflow
+from tensorflow import keras
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dropout
+from tensorflow.keras.layers import Dense, Activation
+from tensorflow.keras.optimizers import SGD
+
+#test tensorboard
+from tensorflow.keras.callbacks import TensorBoard
+
 
 # ===============================================================================================
 COLORDICT = {'red':0, 'orange':1, 'yellow':2, 'green':3, 'blue':4,'purple':5,'brown':6,'pink':7, 'gray':8}
+# ===============================================================================================
+NAME = "rgb_to_human_color_cnn_3x9_dense"
 # ===============================================================================================
 class Model:
     # ===============================================================================================
@@ -16,14 +23,23 @@ class Model:
         self.verif_path = verif_path
         self.colorIndexDict = {b:a for a,b in COLORDICT.items()}
         self.model = None
+        self.tensorboard = None
         self.epochs = epochs
         self.sgd = SGD(lr=learning_rate, momentum=momentum, decay=learning_rate/self.epochs , nesterov=False)
+    # ===============================================================================================
+    def buildModel(self):
+        self.model = Sequential()
+        self.model.add(Dense(9, input_dim=3))
+        self.model.add(Activation('sigmoid'))
+        self.model.add(keras.layers.Dense(9, activation='sigmoid'))
+        self.model.add(keras.layers.Dense(9, activation='softmax'))
+        self.tensorboard = TensorBoard(f'logs/.')
     # ===============================================================================================
     def train(self):
         data = self.readData(self.training_path)
         for d in data:
             d[0] = COLORDICT[d[0]]
-        rgb_vals = [[r,g,b] for c,r,g,b in data]
+        rgb_vals = [[float(r),float(g),float(b)] for c,r,g,b in data]
         X = np.array(rgb_vals) #training rgb vals
         
         #answers(human color)
@@ -34,14 +50,7 @@ class Model:
             rows.append(r)
         y = np.array(rows)
         self.model.compile(loss='mean_squared_error', optimizer=self.sgd, metrics=['accuracy'])
-        self.model.fit(X, y, batch_size=256, epochs=self.epochs)
-    # ===============================================================================================
-    def buildModel(self):
-        self.model = Sequential()
-        self.model.add(Dense(9, input_dim=3))
-        self.model.add(Activation('sigmoid'))
-        self.model.add(keras.layers.Dense(9, activation='sigmoid'))
-        self.model.add(keras.layers.Dense(9, activation='softmax'))
+        self.model.fit(X, y, callbacks=[self.tensorboard],batch_size=256, epochs=self.epochs)
     # ===============================================================================================
     def predictResults(self, arr):
         return self.model.predict(arr)
@@ -85,8 +94,3 @@ class Model:
         print('efficiency : ' + str(efficiency))
         return efficiency
 # ===============================================================================================
-if __name__ == '__main__':
-    m = Model()
-    m.buildModel()
-    m.train()
-    r = m.verify()
