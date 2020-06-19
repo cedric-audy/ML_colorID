@@ -35,7 +35,7 @@ class Model:
         self.model.add(Activation('sigmoid'))
         self.model.add(keras.layers.Dense(9, activation='sigmoid'))
         self.model.add(keras.layers.Dense(9, activation='softmax'))
-        self.tensorboard = TensorBoard(f'.\logs\{NAME}')
+        self.tensorboard = TensorBoard(f'.\logs\{NAME}_{self.learning_rate}_{self.momentum}')
     # ===============================================================================================
     def train(self):
         data = self.readData(self.training_path)
@@ -98,7 +98,7 @@ class Model:
 # ===============================================================================================
     def save(self, ask=False):
         if ask:
-            if input('save model? Y/N') != 'Y':
+            if input('save model? Y/N : ') != 'Y':
                 return
         self.model.save(f'.\saved_model\{NAME}_{self.learning_rate}_{self.momentum}')
 
