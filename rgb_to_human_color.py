@@ -51,7 +51,7 @@ class Model:
             rows.append(r)
         y = np.array(rows)
         self.model.compile(loss='mean_squared_error', optimizer=self.sgd, metrics=['accuracy'])
-        self.model.fit(X, y, callbacks=[self.tensorboard],batch_size=256, epochs=self.epochs)
+        self.model.fit(X, y, callbacks=[self.tensorboard],batch_size=512, epochs=self.epochs)
     # ===============================================================================================
     def predictResults(self, arr):
         return self.model.predict(arr)

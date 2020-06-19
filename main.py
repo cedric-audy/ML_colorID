@@ -82,12 +82,11 @@ if __name__ == '__main__':
     elif args.p:
         import plot_test as pl
         data = pl.plotAccuracy(ACCURACY_DATA)
+    elif args.e:
+        run(args.e,args.lr,args.m)
     elif args.load:
         m = ml_color.Model(TRAINING_DATA, VERIF_DATA)
         m.load_model(f'{args.load}')
-
-    else:
-        run(args.e,args.lr,args.m)
 #===============================================================================================
 
     

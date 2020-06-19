@@ -30,19 +30,11 @@ class Application(tk.Frame):
         self.update()
 
     def create_widgets(self):
-        # self.hi_there = tk.Button(self)
-        # self.hi_there["text"] = "Hello World\n(click me)"
-        # self.hi_there["command"] = self.say_hi
-        # self.hi_there.pack(side="top")
-
-        colors = ["red","orange","yellow","green","blue","purple", "brown", "pink"]
-        
         self.rgb_sample = tk.Label(self, width=50, height=20)
         self.rgb_sample.configure(bg=self.random_rgb_as_hex())
         self.rgb_sample.pack(side="top")
-
+        
         buttonArr = []
-
         buttonArr.append(tk.Button(self, text='red', font=("arial",32), command =lambda:self.curColor('red')))
         buttonArr.append(tk.Button(self, text='yellow',font=("arial",32), command =lambda:self.curColor('yellow')))
         buttonArr.append(tk.Button(self, text='orange', font=("arial",32),command =lambda:self.curColor('orange')))
