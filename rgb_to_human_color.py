@@ -35,6 +35,7 @@ class Model:
         self.model.add(Dense(9, input_dim=3))
         self.model.add(Activation('sigmoid'))
         self.model.add(keras.layers.Dense(9, activation='sigmoid'))
+        self.model.add(keras.layers.Dropout(0.05))
         self.model.add(keras.layers.Dense(9, activation='softmax'))
         self.tensorboard = TensorBoard(f'.\logs\{NAME}_{self.learning_rate}_{self.momentum}')
     # ===============================================================================================
@@ -51,7 +52,7 @@ class Model:
             rows.append(r)
         y = np.array(rows)
         self.model.compile(loss='mean_squared_error', optimizer=self.sgd, metrics=['accuracy'])
-        self.model.fit(X, y, callbacks=[self.tensorboard],batch_size=512, epochs=self.epochs)
+        self.model.fit(X, y, callbacks=[self.tensorboard],batch_size=256, epochs=self.epochs)
     # ===============================================================================================
     def predictResults(self, arr):
         return self.model.predict(arr)
