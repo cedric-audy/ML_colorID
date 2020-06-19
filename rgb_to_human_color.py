@@ -14,11 +14,12 @@ from tensorflow.keras.callbacks import TensorBoard
 # ===============================================================================================
 COLORDICT = {'red':0, 'orange':1, 'yellow':2, 'green':3, 'blue':4,'purple':5,'brown':6,'pink':7, 'gray':8}
 # ===============================================================================================
-NAME = f"3x9_dense{int(time.time())}"
+# NAME = f"3x9_dense{int(time.time())}"
+NAME = f'test'
 # ===============================================================================================
 class Model:
     # ===============================================================================================
-    def __init__(self, training_path, verif_path, epochs =5000, learning_rate=0.99,momentum = 0.8):
+    def __init__(self, training_path='', verif_path='', epochs =5000, learning_rate=0.99,momentum = 0.8):
         self.training_path = training_path
         self.verif_path = verif_path
         self.colorIndexDict = {b:a for a,b in COLORDICT.items()}
@@ -43,10 +44,8 @@ class Model:
             d[0] = COLORDICT[d[0]]
         rgb_vals = [[float(r),float(g),float(b)] for c,r,g,b in data]
         X = np.array(rgb_vals) #training rgb vals
-        
-        #answers(human color)
         rows = []
-        for c,r,g,b in data:
+        for c,r,g,b in data: #answers(human color)
             r = [0,0,0,0,0,0,0,0,0]
             r[c]=1
             rows.append(r)
@@ -101,5 +100,8 @@ class Model:
             if input('save model? Y/N : ') != 'Y':
                 return
         self.model.save(f'.\saved_model\{NAME}_{self.learning_rate}_{self.momentum}')
-
+# ===============================================================================================
+    def load_model(self, path):
+        self.model = keras.models.load_model(path)
+        self.verify()
 # ===============================================================================================
