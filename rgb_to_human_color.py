@@ -25,7 +25,9 @@ class Model:
         self.model = None
         self.tensorboard = None
         self.epochs = epochs
-        self.sgd = SGD(lr=learning_rate, momentum=momentum, decay=learning_rate/self.epochs , nesterov=False)
+        self.learning_rate = learning_rate
+        self.momentum = momentum
+        self.sgd = SGD(lr=learning_rate, momentum=self.momentum, decay=self.learning_rate/self.epochs , nesterov=False)
     # ===============================================================================================
     def buildModel(self):
         self.model = Sequential()
@@ -93,4 +95,11 @@ class Model:
         efficiency = good_guesses/total
         print('efficiency : ' + str(efficiency))
         return efficiency
+# ===============================================================================================
+    def save(self, ask=False):
+        if ask:
+            if input('save model? Y/N') != 'Y':
+                return
+        self.model.save(f'.\saved_model\{NAME}_{self.learning_rate}_{self.momentum}')
+
 # ===============================================================================================

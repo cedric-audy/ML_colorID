@@ -60,8 +60,10 @@ def run(e, lr, mom):
     m.buildModel()
     m.train()
     r = m.verify()
+    m.save(ask=True)
     print(f'{"{:.2}".format(r)},{lr},{mom}')
     append_list_as_row(ACCURACY_DATA,[r,lr,mom])
+
     # print(m.model.get_weights())
 #===============================================================================================
 if __name__ == '__main__':
@@ -84,4 +86,5 @@ if __name__ == '__main__':
 
     else:
         run(args.e,args.lr,args.m)
+
     
