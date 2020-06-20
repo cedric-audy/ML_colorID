@@ -48,6 +48,7 @@ def parse_args():
 	parser.add_argument('-m', type=restricted_float)
 	parser.add_argument('-e', type=int)
 	mutualExclusion = parser.add_mutually_exclusive_group()
+	mutualExclusion.add_argument('--adam', action='store_true')
 	mutualExclusion.add_argument('--load', type=str)
 	mutualExclusion.add_argument('-tr', action='store_true')
 	mutualExclusion.add_argument('-vr', action='store_true')
@@ -56,8 +57,8 @@ def parse_args():
 
 	return args
 #===============================================================================================
-def run(e, lr, mom, ask=True):
-    m = ml_color.Model(TRAINING_DATA, VERIF_DATA, e, lr, mom)
+def run(e, lr, mom, ask=True, adam=False):
+    m = ml_color.Model(TRAINING_DATA, VERIF_DATA, e, lr, mom, adam)
     m.buildModel()
     m.train()
     r = m.verify()
@@ -82,6 +83,8 @@ if __name__ == '__main__':
     elif args.p:
         import plot_test as pl
         data = pl.plotAccuracy(ACCURACY_DATA)
+    elif args.adam and args.e:
+        run(args.e,0,0,ask=True,adam=True)
     elif args.e:
         run(args.e,args.lr,args.m)
     elif args.load:

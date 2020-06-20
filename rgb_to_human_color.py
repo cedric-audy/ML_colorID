@@ -7,7 +7,7 @@ from tensorflow import keras
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dropout
 from tensorflow.keras.layers import Dense, Activation
-from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.optimizers import SGD, Adam
 from tensorflow.keras.callbacks import TensorBoard
 
 
@@ -19,7 +19,7 @@ NAME = f'test'
 # ===============================================================================================
 class Model:
     # ===============================================================================================
-    def __init__(self, training_path='', verif_path='', epochs =5000, learning_rate=0.99,momentum = 0.8):
+    def __init__(self, training_path='', verif_path='', epochs =5000, learning_rate=0.99,momentum = 0.8, adam=False):
         self.training_path = training_path
         self.verif_path = verif_path
         self.colorIndexDict = {b:a for a,b in COLORDICT.items()}
@@ -29,6 +29,7 @@ class Model:
         self.learning_rate = learning_rate
         self.momentum = momentum
         self.sgd = SGD(lr=learning_rate, momentum=self.momentum, decay=self.learning_rate/self.epochs , nesterov=False)
+        self.adam = Adam() if adam else None
     # ===============================================================================================
     def buildModel(self):
         self.model = Sequential()
@@ -51,8 +52,9 @@ class Model:
             r[c]=1
             rows.append(r)
         y = np.array(rows)
-        self.model.compile(loss='mean_squared_error', optimizer=self.sgd, metrics=['accuracy'])
-        self.model.fit(X, y, callbacks=[self.tensorboard],batch_size=256, epochs=self.epochs)
+        self.model.compile(loss='mean_squared_error', optimizer=self.adam if self.adam else self.sgd, metrics=['accuracy'])
+        print(self.adam)
+        self.model.fit(X, y, callbacks=[self.tensorboard],batch_size=512, epochs=self.epochs)
     # ===============================================================================================
     def predictResults(self, arr):
         return self.model.predict(arr)
@@ -98,7 +100,7 @@ class Model:
 # ===============================================================================================
     def save(self, ask=False):
         if ask:
-            if input('save model? Y/N : ') != 'Y':
+            if input('save model? Type name for yes : ') == '':
                 return
         self.model.save(f'.\saved_model\{NAME}_{self.learning_rate}_{self.momentum}')
 # ===============================================================================================
