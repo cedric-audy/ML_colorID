@@ -53,7 +53,6 @@ class Model:
             rows.append(r)
         y = np.array(rows)
         self.model.compile(loss='mean_squared_error', optimizer=self.adam if self.adam else self.sgd, metrics=['accuracy'])
-        print(self.adam)
         self.model.fit(X, y, callbacks=[self.tensorboard],batch_size=512, epochs=self.epochs)
     # ===============================================================================================
     def predictResults(self, arr):
@@ -99,10 +98,12 @@ class Model:
         return efficiency
 # ===============================================================================================
     def save(self, ask=False):
+        
         if ask:
-            if input('save model? Type name for yes : ') == '':
-                return
-        self.model.save(f'.\saved_model\{NAME}_{self.learning_rate}_{self.momentum}')
+            name = input('type model name to save (blank to discard) : ')
+            self.model.save(f'.\saved_model\{name}')
+        else:
+            self.model.save(f'.\saved_model\{NAME}_{self.learning_rate}_{self.momentum}')
 # ===============================================================================================
     def load_model(self, path):
         self.model = keras.models.load_model(path)
