@@ -14,8 +14,7 @@ from tensorflow.keras.callbacks import TensorBoard
 # ===============================================================================================
 COLORDICT = {'red':0, 'orange':1, 'yellow':2, 'green':3, 'blue':4,'purple':5,'brown':6,'pink':7, 'gray':8}
 # ===============================================================================================
-# NAME = f"3x9_dense{int(time.time())}"
-NAME = f'test'
+NAME = f"time.time()"
 # ===============================================================================================
 class Model:
     # ===============================================================================================
@@ -33,11 +32,12 @@ class Model:
     # ===============================================================================================
     def buildModel(self):
         self.model = Sequential()
-        self.model.add(Dense(15, input_dim=3))
-        self.model.add(Activation('relu'))
-        self.model.add(keras.layers.Dense(15, activation='sigmoid'))
+        self.model.add(Dense(12, input_dim=3))
+        self.model.add(Activation('sigmoid'))
+        self.model.add(keras.layers.Dense(12, activation='sigmoid'))
+        self.model.add(keras.layers.Dropout(0.05))
         self.model.add(keras.layers.Dense(9, activation='softmax'))
-        self.tensorboard = TensorBoard(f'.\logs\{NAME}_{self.learning_rate}_{self.momentum}')
+        self.tensorboard = TensorBoard(f'.\logs\{NAME}')
     # ===============================================================================================
     def train(self):
         data = self.readData(self.training_path)
@@ -51,8 +51,8 @@ class Model:
             r[c]=1
             rows.append(r)
         y = np.array(rows)
-        self.model.compile(loss='mean_squared_error', optimizer=self.adam if self.adam else self.sgd, metrics=['accuracy'])
-        self.model.fit(X, y, callbacks=[self.tensorboard],batch_size=256, epochs=self.epochs)
+        self.model.compile(loss='binary_crossentropy', optimizer=self.adam if self.adam else self.sgd, metrics=['accuracy'])
+        self.model.fit(X, y, callbacks=[self.tensorboard],batch_size=512, epochs=self.epochs)
     # ===============================================================================================
     def predictResults(self, arr):
         return self.model.predict(arr)
