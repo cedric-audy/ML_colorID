@@ -97,7 +97,6 @@ class Model:
         return efficiency
 # ===============================================================================================
     def save(self, ask=False):
-        
         if ask:
             name = input('type model name to save (blank to discard) : ')
             self.model.save(f'.\saved_model\{name}')
