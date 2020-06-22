@@ -10,9 +10,6 @@ For training, I wrote a small tkinter program that displays a random rgb value, 
 ![trainer](/img/trainer.jpg)
 
 
-Accuracy is currently maxing out at ~95%. The program has a hard time distinghishing between orange and brown, and between pink and purple.
+*Accuracy is currently maxing out at ~95%*. The program has a hard time distinghishing between orange and brown, and between pink and purple.
 
 ![results](/img/results.jpg)
-
-
-![plot](/img/3dplot.jpg)

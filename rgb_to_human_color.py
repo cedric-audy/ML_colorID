@@ -51,7 +51,7 @@ class Model:
             r[c]=1
             rows.append(r)
         y = np.array(rows)
-        self.model.compile(loss='binary_crossentropy', optimizer=self.adam if self.adam else self.sgd, metrics=['accuracy'])
+        self.model.compile(loss='mean_squared_error', optimizer=self.adam if self.adam else self.sgd, metrics=['accuracy'])
         self.model.fit(X, y, callbacks=[self.tensorboard],batch_size=512, epochs=self.epochs)
     # ===============================================================================================
     def predictResults(self, arr):
