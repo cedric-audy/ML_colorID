@@ -35,7 +35,6 @@ class Model:
         self.model.add(Dense(12, input_dim=3))
         self.model.add(Activation('sigmoid'))
         self.model.add(keras.layers.Dense(12, activation='sigmoid'))
-        self.model.add(keras.layers.Dropout(0.05))
         self.model.add(keras.layers.Dense(9, activation='softmax'))
         self.tensorboard = TensorBoard(f'.\logs\{NAME}')
     # ===============================================================================================
