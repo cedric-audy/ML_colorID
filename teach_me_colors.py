@@ -64,6 +64,8 @@ class Application(tk.Frame):
         self.rgb_sample.configure(bg=self.random_rgb_as_hex())
 
 if __name__ == '__main__':
-    root = tk.Tk()
-    app = Application(master=root)
-    app.mainloop()
+    for i in range(0,255):
+         with open('data\color_training.csv', 'a+', newline='') as write_obj:
+            csv_writer = writer(write_obj)
+            csv_writer.writerow(['gray', i, i, i])
+           
